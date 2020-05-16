@@ -1,0 +1,71 @@
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+#fullCarousel.carousel {
+  margin-bottom: 4rem;
+}
+/* Since positioning the image, we need to help out the caption */
+#fullCarousel .carousel-caption {
+  bottom: 3rem;
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+#fullCarousel .item {
+  height: 32rem;
+  background-color: #f1f9fd;
+}
+#fullCarousel .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 32rem;
+} 
+
+#fullCarousel .carousel-control{color: #000000;}
+#fullCarousel .carousel-control.right{background-image:none;}
+#fullCarousel .carousel-control.left{background-image:none;}
+#fullCarousel .carousel-control:focus, .carousel-control:hover{color: #000000;}
+#fullCarousel .carousel-caption{color: #333;text-shadow: none;}
+ 
+/*#testimonialCarousel.carousel { margin: 50px auto;padding: 0 70px;}*/
+#testimonialCarousel.carousel .item {color: #999;overflow: hidden; min-height: 120px;font-size: 13px; margin-top: 0px;}
+#testimonialCarousel.carousel .media img {width: 80px;height: 80px;display: block;border-radius: 50%;}
+#testimonialCarousel.carousel .testimonial {padding: 0px 15px 0 60px;position: relative;}
+#testimonialCarousel.carousel .testimonial-info {padding: 10px 15px 0 60px;position: relative;}
+#testimonialCarousel.carousel .testimonial::before {content: '\201C';color: #666666;font-weight: bold;font-size: 68px;line-height: 54px;position: absolute;left: 15px;top: 0px;}
+#testimonialCarousel.carousel .testimonial::after {content: '\201D';color: #666666;font-weight: bold;font-size: 68px;line-height: 0px;position: absolute;right: 15px;bottom: 0px;}
+#testimonialCarousel.carousel .overview b { font-size: 18px; text-transform: capitalize; color: #666666;}
+#testimonialCarousel.carousel .carousel-indicators {bottom: -40px;}
+#testimonialCarousel .carousel-indicators li, .carousel-indicators li.active {width: 18px;height: 18px;border-radius: 50%;margin: 1px 3px;}
+#testimonialCarousel .carousel-indicators li { background: #e2e2e2; border: 4px solid #fff;}
+#testimonialCarousel .carousel-indicators li.active {color: #fff; background: #1c47e3; border: 5px double;}
+#testimonialCarousel .testimonial p.testimonial-text{font-size: 26px;line-height: 1.4; color: #666666; text-align: left;font-weight: 600;}
+#testimonialCarousel .carousel-control{color: #FFFFFF; text-shadow:none;background-repeat: no-repeat; background-color: transparent; opacity: 1;}
+#testimonialCarousel .carousel-control.right{background-image:none;}
+#testimonialCarousel .carousel-control.left{background-image:none;}
+#testimonialCarousel .carousel-control:focus, .carousel-control:hover{color: #000000;}
+
+.MultiCarousel { float: left; overflow: hidden; padding: 15px; width: 100%; position:relative; }
+.MultiCarousel .MultiCarousel-inner { transition: 1s ease all; float: left; }
+.MultiCarousel .MultiCarousel-inner .item { float: left;}
+.MultiCarousel .MultiCarousel-inner .item > div { text-align: center; padding:10px; margin:10px; background:#f1f1f1; color:#666;}
+.MultiCarousel .leftLst, .MultiCarousel .rightLst { position:absolute; border-radius:50%;top:calc(35% - 20px); font-size: 30px; color: #666666;}
+.MultiCarousel .leftLst { left:0; }
+.MultiCarousel .rightLst { right:0; }
+.MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; }
+.MultiCarousel .vacancy_data{font-size: 18px;}
+.MultiCarousel .leftLst.over a:active, .MultiCarousel .leftLst.over a:focus, .MultiCarousel .leftLst.over a:hover, .MultiCarousel .rightLst.over a:active, .MultiCarousel .leftLst.over a:focus, .MultiCarousel .leftLst.over a:hover{color: #666666;}
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 40em) {
+  /* Bump up size of carousel content */
+  #fullCarousel .carousel-caption p {
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+}  

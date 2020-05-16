@@ -1,0 +1,178 @@
+@extends('user.layouts.app')
+
+@section('content')  
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ol class="breadcrumb">
+            <li><a href="#" class="text-info">Home</a></li>
+            <li><a href="{{ url("categories/") }}" class="text-info">Forum</a></li>
+            <li class="active capitalize"> My Topics</li>
+        </ol>
+    </div>
+</div> 
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12"> 
+        <div class="row m-b-20">
+            <div class="col-xs-12">
+                <h2 class="page-title capitalize no-margin"><b>My Topics</b></h2> 
+            </div>
+        </div>
+        @if(count($data['topic_list'])>0)
+        <div class="infinite-scroll">  
+            @foreach($data['topic_list'] as $topic)
+            @php
+                $topic_url = url('/topicdetail/'.$topic->ft_slug);
+            @endphp
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="alert alert-warning alert-dismissable hide" id="off_topic_notify_{{$topic->ft_id}}">
+                            <button type="button" class="close" onclick="hide_alert(this);">&times;</button>
+                            <p class="m-b-0">You'll get a notification whenever someone comments on this topic.</p>
+                            <a class="text-info cpointer" onclick="notifyme('{{$topic->ft_id}}',0,this)">Turn OFF Notifications</a>
+                        </div>
+                        <div class="alert alert-warning alert-dismissable hide" id="on_topic_notify_{{$topic->ft_id}}">
+                            <button type="button" class="close" onclick="hide_alert(this);">&times;</button>
+                            <p class="m-b-0">You'll no longer get notifications about this topic.</p>
+                            <a class="text-info cpointer" onclick="notifyme('{{$topic->ft_id}}',1,this)">Turn On Notifications</a>
+                        </div> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="topicId_{{$topic->ft_id}}">
+                        <div class="panel panel-default custom_panel">
+                            <div class="panel-heading b-none"><a class="text-info" href="{{$topic_url}}">{{$topic->ft_title}}</a>
+                                <div class="panel-action">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="examplePanelDropdown" data-toggle="dropdown" href="#" aria-expanded="false" role="button">
+                                            <i class="fa fa-2x fa-angle-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu bullet dropdown-menu-right" aria-labelledby="examplePanelDropdown" role="menu"> 
+                                            <li role="presentation" class="b-b">
+                                                @if($topic->ftn_status==1) 
+                                                    <a href="javascript:void(0)" role="menuitem" onclick="notifyme('{{$topic->ft_id}}',0,this);">Turn off notifications for this topic</a> 
+                                                @else  
+                                                    <a href="javascript:void(0)" role="menuitem" onclick="notifyme('{{$topic->ft_id}}',1,this);">Turn on notifications for this topic</a>
+                                                @endif
+                                            </li> 
+                                            <li role="presentation" class="b-b">
+                                                <a href="{{route('edittopic.form',encrypt($topic->ft_id))}}" role="menuitem">Edit Topic</a> 
+                                            </li> 
+                                            <li role="presentation" class="b-b">
+                                                <a href="javascript:;" class=" text-danger" role="menuitem"  onclick="deleteTopics('{{$topic->ft_id}}');">Delete Topic</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <p>{!!  str_limit($topic->ft_desc, $limit = 500, $end = "<a href=$topic_url> more..</a>") !!} </p>
+                                </div>
+                                <div class="panel-footer b-none p-t-0 p-b-10"> 
+                                    @if($topic->tag_title != "")
+                                    <ul class="list-inline category_label">
+                                        @php $tagAry = custom_explode($topic->tag_slug); @endphp
+                                        @foreach(custom_explode($topic->tag_title) as $key => $tag_title)  
+                                            <li><a href="{{ url("tag/".$tagAry[$key]) }}" class="btn btn-outline btn-default btn-sm"><span class="text-info">{{ $tag_title }} </span></a> </li>
+                                        @endforeach
+                                    </ul>
+                                    @endif 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                {{ $data['topic_list']->links() }} 
+                </div> 
+            </div>
+        </div>
+        @else 
+            <div class="row m-b-10">
+                <div class="col-lg-5 col-md-8 col-sm-8 col-xs-8 nodata_box">
+                    <div class="arrow"></div>
+                    <div class="nodata_box_content text-left">
+                        <h4><b>Silent as the antarctica, right?</b></h4>
+                        <p>Let's start your first discussion before we freeze...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 m-b-20">
+                    <div class="no_timeline_img pull-right">
+                        <img src="{{asset($image_path.'penguin.png')}}">
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-6 col-sm-6 col-xs-6 text-left">
+                    <a href="{{ url("addtopic") }}" class="btn btn-lg btn-info p-15 font-13">Post New Topic</a>
+                </div>
+            </div>  
+        @endif
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        @include('user/includes/forumSidebar')
+    </div>
+</div>  
+@endsection 
+@section('scripts')
+<script type="text/javascript">
+    
+    function deleteTopics(topicId){
+        showLoader("#full-overlay");
+        confirmAlert('',"On confirm topic will be deleted.","warning","Are you sure?","Confirm",function(r,i){
+            if(i){
+            $.ajax({
+                type: 'post',
+                url: "{{route('forumajaxrequest')}}",
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }, 
+                data: {  
+                    'topicId': topicId,
+                    'action': 'deleteTopics'
+                },
+                dataType: "json",
+                success: function(response) { 
+                    if(response.type=="success"){ 
+                          $("#topicId_"+topicId).addClass("hide");
+                    }
+                }
+            }); 
+            }
+            else{
+                hideLoader("#full-overlay");
+            }
+        });
+    }
+    
+    
+    function notifyme(topicId,status,element){ 
+        
+        $.ajax({
+            type: 'post',
+            url: "{{route('forumajaxrequest')}}",
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }, 
+            data: {  
+                'topicId': topicId,
+                'status': status,
+                'action': 'notifyme'
+            },
+            dataType: "json",
+            success: function(response) { 
+                if(response.type=="success"){ 
+                    if(status==1){ 
+                        $(element).closest("li").html('<a href="javascript:void(0)" role="menuitem" onclick="notifyme(\''+topicId+'\',0,this);">Turn off notifications for this topic</a>');
+                        $("#off_topic_notify_"+topicId).removeClass("hide");
+                        $("#on_topic_notify_"+topicId).addClass("hide");
+                    }else{
+                        $(element).closest("li").html('<a href="javascript:void(0)" role="menuitem" onclick="notifyme(\''+topicId+'\',1,this);">Turn on notifications for this topic</a>');
+                        $("#on_topic_notify_"+topicId).removeClass("hide");
+                        $("#off_topic_notify_"+topicId).addClass("hide");
+                    }  
+                }
+            }
+        }); 
+    }
+
+</script>
+@stop  

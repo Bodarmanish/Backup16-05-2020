@@ -1,0 +1,43 @@
+html, body, #page-wrapper, .sidebar {
+    background: #F2F2F2 !important;
+}
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+}
+/* Common Css */
+
+.main-container{
+    margin:auto;
+    background-color:#1D3F6C;
+    width:640px;
+}
+
+.logo-header{
+    background-color: #213e64;
+    background-image: url('/images/email_header_bg.png');
+    background-repeat: repeat-x;
+}
+
+.message-container{
+    background:#FFFFFF;
+    padding:15px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    border:#1D3F6C 10px solid;
+    border-top:0 none;
+}
+
+.message-body{
+    line-height:20px;
+    margin-top: 20px;
+}
+
+.message-signature{
+    text-align:right;
+    font-style:italic;
+    font-size:12px;
+    line-height:20px;
+}
